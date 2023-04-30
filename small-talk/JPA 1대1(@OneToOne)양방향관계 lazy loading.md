@@ -84,7 +84,10 @@ public List<CouponEntity> findNotExistLiveCoupon(LocalDate publishDate) {
 * 소요 시간 : 10초 이내
 * 기능 동작 : 정상
 
-## 3 정리
+## 3. 정리
 기존에 잘 동작하던 내용이더라도 잘 테스트를 하여 진행하자... </br>
 핑계 아닌 핑계이지만 개발 기간이 너무 짧았다... </br>
 하지만 해당 내용은 모르고 있던 내용이라 정리할 기회가 있어서 나쁘지는 않은듯... </br>
+
+## 4.참조
+https://1-7171771.tistory.com/143
