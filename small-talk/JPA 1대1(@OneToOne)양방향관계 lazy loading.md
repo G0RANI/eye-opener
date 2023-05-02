@@ -72,7 +72,7 @@ CouponEntity 조회할때 CouponUsedEntity 프록시 객체로 가져오게 된�
 ```java
 public List<CouponEntity> findNotExistLiveCoupon(LocalDate publishDate) {
         return from(couponEntity)
-                .leftJoin(couponUsedEntity).on(couponEntiy.eq(couponUsedEntity.couponEntiy))
+                .leftJoin(couponUsedEntity).on(couponEntiy.eq(couponUsedEntity.couponEntiy)).fetchJoin()
                 .where(...중략))
                 .fetch();
 }
