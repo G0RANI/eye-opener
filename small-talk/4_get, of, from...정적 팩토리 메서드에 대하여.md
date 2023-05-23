@@ -98,7 +98,7 @@ public class OrderFactory {
 ```java
 public class CouponEventFactory {
 
-    public Optional<CouponEvent> of(List<CouponEvent> couponEvents) {
+    public static Optional<CouponEvent> of(List<CouponEvent> couponEvents) {
         return couponEvents.stream()
                 .filter(event -> event.isSupport(eventType))
                 .findFirst();
