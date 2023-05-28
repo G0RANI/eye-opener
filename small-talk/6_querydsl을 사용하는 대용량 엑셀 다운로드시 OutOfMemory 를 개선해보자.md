@@ -16,7 +16,7 @@
 
 크게 두가지의 문제점이 있었다.
 
-#### 2.1 조회
+### 2.1 조회
 
 ```java
 List<Dto> resultList = getQuerydsl().....from(table).fetch()
@@ -25,9 +25,7 @@ List<Dto> resultList = getQuerydsl().....from(table).fetch()
 - 대량 데이터를 조회하고 다운로드할 때 다운로드 대상 전체를 메모리에 모두 적체 후 처리하고 있었다.
 - Heap Size 를 늘려도 동시 요청 때 동일 증상이 계속 발생할것이다.
 
-#### 
-
-#### 2.2 다운로드 진행
+### 2.2 다운로드 진행
 
 ```java
 public <T> InputStreamResource exportExcel(List<T> exportList, Class<T> exportClass) {
@@ -50,7 +48,7 @@ public <T> InputStreamResource exportExcel(List<T> exportList, Class<T> exportCl
 
 ## 3. 해결
 
-#### 3.1 조회
+### 3.1 조회
 
 조회는 QueryDsl을 사용하고 있고 조회한 데이터를 메모리에 안올릴수 있는 방법을 찾아보았다.
 
@@ -58,11 +56,11 @@ public <T> InputStreamResource exportExcel(List<T> exportList, Class<T> exportCl
 
 
 
-- `stream()` 메서드를 사용하는 방법
-  - 효율성: 데이터를 필요한 만큼 처리하므로 일부 데이터만 사용하는 경우에 유리.
-  - 적합한 상황: 작은 규모의 데이터나 일부 데이터만 처리해야 할 때, 코드의 가독성과 유연성을 강조하는 경우에 사용.
+#### `stream()` 메서드를 사용하는 방법
+- 효율성: 데이터를 필요한 만큼 처리하므로 일부 데이터만 사용하는 경우에 유리.
+- 적합한 상황: 작은 규모의 데이터나 일부 데이터만 처리해야 할 때, 코드의 가독성과 유연성을 강조하는 경우에 사용.
 
-```
+```java
 Stream<Dto> resultList = getQuerydsl().....from(table).stream()
 ```
 
@@ -74,9 +72,10 @@ Java 8의 Stream API와 유사한 방식으로 데이터를 스트림으로 처�
 
 
 
--  `iterate()` 메서드를 사용하여 `CloseableIterator`를 받는 방법
-  - 효율성: 대용량 데이터 처리에 특화되어 있으며, 메모리 사용량을 최소화.
-  - 적합한 상황: 대량의 데이터를 효율적으로 처리해야 할 때, 메모리 사용량을 관리하고 데이터베이스 연결을 효율적으로 관리해야 할 때 사용.
+
+#### `iterate()` 메서드를 사용하는 방법
+- 효율성: 대용량 데이터 처리에 특화되어 있으며, 메모리 사용량을 최소화.
+- 적합한 상황: 대량의 데이터를 효율적으로 처리해야 할 때, 메모리 사용량을 관리하고 데이터베이스 연결을 효율적으로 관리해야 할 때 사용.
 
 ```java
 CloseableIterator<Dto> resultList = getQuerydsl().....from(table).iterate()
@@ -92,7 +91,8 @@ CloseableIterator<Dto> resultList = getQuerydsl().....from(table).iterate()
 
 
 
-#### 3.2 다운로드 진행
+
+### 3.2 다운로드 진행
 
 ```java
 Workbook workbook = new XSSFWorkbook();
@@ -160,5 +160,4 @@ try {
 이 내용을 팀원에게 공유를 하였지만 어렵다...? 자신의 능력 밖이다 란 말과 함께 적용은 생각해보겠다...라고 한다..
 
 후...아쉬워라 함께 생각하고 공유할 수 있는 동료가 생겼으면 좋겠다.
-
 
