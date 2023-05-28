@@ -107,7 +107,7 @@ headerRow.createCell(1).setCellValue("Column 2");
 // 데이터 삽입
 int rowIndex = 1;
 while (resultList.hasNext()) {
-    Entity entity = iterator.next();
+    Entity entity = resultList.next();
     Row row = sheet.createRow(rowIndex++);
     row.createCell(0).setCellValue(entity.getColumn1());
     row.createCell(1).setCellValue(entity.getColumn2());
