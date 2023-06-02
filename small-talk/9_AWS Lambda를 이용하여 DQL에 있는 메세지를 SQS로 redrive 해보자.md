@@ -94,7 +94,7 @@ Python으로 코드를 작성하기로 한다. 이름과 런타임을 지정하�
 
 해당 lambda에서 sql 접근 권한이 없어 AccessDenied가 되었다.
 
-IAM에서 해당 lambda에 할당된 role sqs에 대한 정책을 주었다.
+IAM에서 해당 lambda에 할당된 role에 sqs에 대한 정책을 주었다.
 
 ![4.png](https://github.com/G0RANI/eye-opener/blob/main/image/9-718ed6b5/4.png?raw=true)
 
