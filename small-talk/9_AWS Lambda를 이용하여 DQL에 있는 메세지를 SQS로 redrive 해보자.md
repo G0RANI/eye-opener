@@ -64,6 +64,80 @@ dlq는 수신이 10번 초과로 실패한 메세지를 2일 동안 보관하고
 
 
 
-# 작성중...
+### 3.1 Lambda 생성
+
+![1.png](https://github.com/G0RANI/eye-opener/blob/main/image/9-718ed6b5/1.png?raw=true)
+
+Python으로 코드를 작성하기로 한다. 이름과 런타임을 지정하고 role은 따로 지정안하고 자동생성으로 진행 하였다.
 
 
+
+### 3.2 Lambda 코드 작성
+
+![2.png](https://github.com/G0RANI/eye-opener/blob/main/image/9-718ed6b5/2.png?raw=true)
+
+소스 코드를 작성 하였다. boto3를 통하여 sqs에 접근, dlq와 sqs url을 통해 메세지를 받는다.
+
+일단 메세지 전송하기 전에 전일 메세지를 모두 받아온다.
+
+`receive_messsage`에 MaxNumberOfMessages 는 한번에 받아올 메세지 수 인데 최대가 10이다.
+
+따라서 메세지를 받아 온 후 삭제 하고 다시 받는 형식으로 만들 예정이다.
+
+해당 코드를 테스트를 하였더니,
+
+
+
+### 3.3 lambda 권한 할당 및 세팅
+
+![3.png](https://github.com/G0RANI/eye-opener/blob/main/image/9-718ed6b5/3.png?raw=true)
+
+해당 lambda에서 sql 접근 권한이 없어 AccessDenied가 되었다.
+
+IAM에서 해당 lambda에 할당된 role sqs에 대한 정책을 주었다.
+
+![4.png](https://github.com/G0RANI/eye-opener/blob/main/image/9-718ed6b5/4.png?raw=true)
+
+이번에는 Task timed out 이란 내용을 받았다.
+
+따라서 lambda 구성의 제한 시간을 30초로 늘려주었다.
+
+![5.png](https://github.com/G0RANI/eye-opener/blob/main/image/9-718ed6b5/5.png?raw=true)
+
+
+
+### 3.4 Event Bridge를 통한 트리거
+
+매일 새벽 6시에 해당 lambda가 실행 될 수 있도록 트리거를 설정하였다.
+
+![6.png](https://github.com/G0RANI/eye-opener/blob/main/image/9-718ed6b5/6.png?raw=true)
+
+![7.png](https://github.com/G0RANI/eye-opener/blob/main/image/9-718ed6b5/7.png?raw=true)
+
+Event Bridge를 이용하여 cron시간을 추가 해 주었다.
+
+
+
+### 3.5 최종 구성
+
+![8.png](https://github.com/G0RANI/eye-opener/blob/main/image/9-718ed6b5/8.png?raw=true)
+
+코드는 한번 리펙토링을 하였다.
+
+sqs와 연동되는 부분을 sqs_client.py로 나누고 한 기능만 할 수 있게 함수들을 나누었다.
+
+![9.png](https://github.com/G0RANI/eye-opener/blob/main/image/9-718ed6b5/9.png?raw=true)
+
+![10.png](https://github.com/G0RANI/eye-opener/blob/main/image/9-718ed6b5/10.png?raw=true)
+
+
+
+## 4. 결과
+
+테스트를 위해 dlq에 대량의 메세지를 생성하였고, 전일자로 생성된 메세지들이 sqs로 다시 적재되는것을 확인 하였다.
+
+외부 연동 하는 서비스가 요즘 문제가 많아 dlq에 메세지가 생기고 다시 redrive하는 일이 있었는데,
+
+이 작업으로 인해 내가 신경 못쓰는 상황에서도 재 기능을 할수 있길 바라본다.
+
+다음에는 해당 lambda 소스코드에 대한 CI/CD를 위해 CodeCommit과 CodePipeline을 통하여 자동 배포되는 아키텍쳐를 만들어 볼 예정이다.
