@@ -47,7 +47,7 @@
 @RequiredArgsConstructor
 public abstract class PayTemplate {
 		
-  	private final PgClients pgClients;
+    private final PgClients pgClients;
     private final PaymentValidator PaymentValidator;
     private final PaymentCommandService paymentCommandService;
 
@@ -87,7 +87,7 @@ public class PayCreditCard extends PayTemplate {
 @RequiredArgsConstructor
 public abstract class PayTemplate {
 		
-  	private final PgClients pgClients;
+    private final PgClients pgClients;
     private final PaymentValidator PaymentValidator;
     private final PaymentCommandService paymentCommandService;
 
@@ -145,8 +145,8 @@ public interface PayTemplate {
 @Slf4j
 @RequiredArgsConstructor
 public class PayManager {
-  
-	private final PgClients pgClients;
+
+  private final PgClients pgClients;
   private final PayTemplate payTemplate;
   private final PaymentValidator PaymentValidator;
   private final PaymentCommandService paymentCommandService;
