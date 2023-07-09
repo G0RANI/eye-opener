@@ -143,4 +143,5 @@ sqs와 연동되는 부분을 sqs_client.py로 나누고 한 기능만 할 수 �
 다음에는 해당 lambda 소스코드에 대한 CI/CD를 위해 CodeCommit과 CodePipeline을 통하여 자동 배포되는 아키텍쳐를 만들어 볼 예정이다.
 
 ## 5. 추가
-2023년 7월 6일 이후로 AWS에서 Dlq를 redrive 시켜주는 sdk를 제공해주는듯하다...
+2023년 6월 11일 이후로 AWS에서 Dlq를 redrive 시켜주는 Api를 제공해주는듯하다...
+https://aws.amazon.com/ko/blogs/korea/a-new-set-of-apis-for-amazon-sqs-dead-letter-queue-redrive/
